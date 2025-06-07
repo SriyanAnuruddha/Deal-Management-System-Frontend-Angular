@@ -1,0 +1,11 @@
+<h1>Register User</h1>
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmitHandler()">
+  <label for="username">Enter username</label>
+  <input type="text" id="username" formControlName="username" />
+
+  <label for="password">Enter password</label>
+  <input type="password" id="password" formControlName="password" />
+
+  <button type="submit">login</button>
+</form>

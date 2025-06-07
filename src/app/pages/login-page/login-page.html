@@ -1,0 +1,12 @@
+<h1>Deal Management System</h1>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmitHandler()">
+  <label for="username">Enter username</label>
+  <input type="text" id="username" formControlName="username" />
+
+  <label for="password">Enter password</label>
+  <input type="password" id="password" formControlName="password" />
+
+  <button type="submit">login</button>
+  <p>you don't an account? <span [routerLink]="'/signup'">Sign-up</span></p>
+</form>
