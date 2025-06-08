@@ -1,0 +1,32 @@
+<app-navbar />
+<div class="assign-hotels-container">
+  <h2>Assign Hotels to Deal: {{ dealId }}</h2>
+
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading hotels...</p>
+  </div>
+
+  <div *ngIf="apiErrors" class="api-errors">
+    <p>{{ apiErrors.general }}</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !apiErrors && availableHotels.length === 0"
+    class="no-hotels-message"
+  >
+    <p>No hotels available to assign.</p>
+  </div>
+
+  <div class="hotels-list">
+    <app-admin-assign-hotel
+      *ngFor="let hotel of availableHotels"
+      [hotel]="hotel"
+      [isInitiallyChecked]="selectedHotelIds.has(hotel.id)"
+      (hotelAssigned)="onHotelCheckboxChange($event)"
+    ></app-admin-assign-hotel>
+  </div>
+
+  <div *ngIf="!isLoading && availableHotels.length > 0" class="submit-section">
+    <button (click)="assignHotelsToDeal()">Assign Selected Hotels</button>
+  </div>
+</div>
