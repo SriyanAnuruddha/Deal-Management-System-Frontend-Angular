@@ -3,7 +3,12 @@
 
   <div class="deal-actions">
     <button (click)="onViewDetailsClick()">View Deal Details</button>
-    <button [routerLink]="['/update-deal', deal?.id]">Update Deal</button>
+    <button [routerLink]="['/assign-hotels', deal?.id]">
+      assign more hotels
+    </button>
     <button (click)="onDeleteClick()">Delete Deal</button>
+    <button [routerLink]="['/update-deal', deal?.id,deal?.name]">
+      Update Deal
+    </button>
   </div>
 </div>

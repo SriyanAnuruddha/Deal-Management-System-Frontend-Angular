@@ -1,11 +1,29 @@
 <app-navbar />
-<div>
-  <div>
-    <!-- deal name -->
-    <input type="text" name="name" />
-    <input type="file" name="videoFile" />
+<div class="update-deal-container">
+  <h2>Update Deal: {{ dealName || 'Loading...' }}</h2>
+  <div *ngIf="apiErrors" class="api-errors">
+    <p>{{ apiErrors.general }}</p>
   </div>
-  <div>
-    <!-- available hotels -->
-  </div>
+  <form (ngSubmit)="onUpdateDetails()">
+    <div>
+      <label for="dealName">Deal Name:</label>
+      <input
+        type="text"
+        id="dealName"
+        name="name"
+        [(ngModel)]="dealName"
+        required
+      />
+    </div>
+    <div>
+      <label for="videoFile">Video File (optional):</label>
+      <input
+        type="file"
+        id="videoFile"
+        name="videoFile"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+    <button type="submit">Update Details</button>
+  </form>
 </div>
