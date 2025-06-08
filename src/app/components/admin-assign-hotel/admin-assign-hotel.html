@@ -1,0 +1,16 @@
+<div class="hotel-card">
+  <div class="hotel-details">
+    <h3>Hotel Name: <span>{{ hotel.name }}</span></h3>
+    <h3>Rate: <span>{{ hotel.rate }}</span></h3>
+    <h3>Amenities: <span>{{ hotel.amenities }}</span></h3>
+  </div>
+
+  <div class="hotel-actions">
+    <input
+      type="checkbox"
+      name="assignHotel"
+      [checked]="currentCheckedState"
+      (change)="onCheckboxChange($event)"
+    />
+  </div>
+</div>
