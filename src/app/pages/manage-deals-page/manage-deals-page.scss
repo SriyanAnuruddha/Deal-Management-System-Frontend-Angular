@@ -1,0 +1,58 @@
+.manage-deals-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
+  }
+
+  .actions-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  .api-errors {
+    background-color: #ffe0e0;
+    border-left: 4px solid #d9534f;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #b30000;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  .deals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .no-deals-message {
+      text-align: center;
+      font-size: 1rem;
+      color: #777;
+      padding: 1rem 0;
+    }
+  }
+}

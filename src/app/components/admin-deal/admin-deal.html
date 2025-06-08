@@ -1,6 +1,9 @@
-<div>
-  <h3>Deal Name: name</h3>
-  <button>view deal details</button>
-  <button>update deal</button>
-  <button>delete deal</button>
+<div class="admin-deal-card">
+  <h3>Deal Name: <span>{{ deal?.name }}</span></h3>
+
+  <div class="deal-actions">
+    <button (click)="onViewDetailsClick()">View Deal Details</button>
+    <button [routerLink]="['/update-deal', deal?.id]">Update Deal</button>
+    <button (click)="onDeleteClick()">Delete Deal</button>
+  </div>
 </div>

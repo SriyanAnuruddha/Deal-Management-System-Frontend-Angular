@@ -1,8 +1,22 @@
 <app-navbar />
-<h2>Manage Deals</h2>
-<div>
-  <button [routerLink]="'/add-deal'">+ Add Deal</button>
-  <div>
-    <!-- display all the deal components here -->
+<div class="manage-deals-page">
+  <h2>Manage Deals</h2>
+  <div class="actions-section">
+    <button [routerLink]="'/add-deal'">+ Add Deal</button>
+  </div>
+
+  <div *ngIf="apiErrors" class="api-errors">
+    <p>{{ apiErrors.general }}</p>
+  </div>
+
+  <div class="deals-list">
+    <div *ngIf="deals.length === 0 && !apiErrors" class="no-deals-message">
+      <p>No deals found. Click "+ Add Deal" to create one.</p>
+    </div>
+    <app-admin-deal
+      *ngFor="let deal of deals"
+      [deal]="deal"
+      (deleteClicked)="onDeleteDeal($event)"
+    ></app-admin-deal>
   </div>
 </div>

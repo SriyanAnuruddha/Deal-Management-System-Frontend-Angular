@@ -8,6 +8,7 @@ import { ManageDealsPage } from './pages/manage-deals-page/manage-deals-page';
 import { AddHotelPage } from './pages/add-hotel-page/add-hotel-page';
 import { UpdateHotelPage } from './pages/update-hotel-page/update-hotel-page';
 import { AddDealPage } from './pages/add-deal-page/add-deal-page';
+import { UpdateDealPage } from './pages/update-deal-page/update-deal-page';
 
 export const routes: Routes = [
   {
@@ -45,5 +46,9 @@ export const routes: Routes = [
   {
     path: 'add-deal',
     component: AddDealPage,
+  },
+  {
+    path: 'update-deal/:id',
+    component: UpdateDealPage,
   },
 ];
