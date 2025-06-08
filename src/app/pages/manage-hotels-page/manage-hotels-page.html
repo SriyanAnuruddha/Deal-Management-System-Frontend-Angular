@@ -1,0 +1,31 @@
+<app-navbar />
+<div class="manage-hotels-page">
+  <div class="header">
+    <h2>Manage Hotels</h2>
+    <button class="add-hotel-btn" [routerLink]="'/add-hotels'">
+      + Add Hotel
+    </button>
+  </div>
+
+  <div class="hotels-container">
+    <ng-container *ngIf="hotels$ | async as hotels; else loadingOrNoHotels">
+      <div class="hotel-list">
+        <app-admin-hotel
+          *ngFor="let hotel of hotels"
+          [hotel]="hotel"
+          (hotelDeleted)="onHotelDeleted($event)"
+        ></app-admin-hotel>
+      </div>
+    </ng-container>
+
+    <ng-template #loadingOrNoHotels>
+      <div *ngIf="(hotels$ | async)?.length === 0" class="no-hotels">
+        <p>No hotels found.</p>
+      </div>
+    </ng-template>
+
+    <button class="secondary-add-btn" routerLink="/add-hotel">
+      Add New Hotel
+    </button>
+  </div>
+</div>

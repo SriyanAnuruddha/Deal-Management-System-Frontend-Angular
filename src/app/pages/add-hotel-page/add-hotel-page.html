@@ -1,0 +1,20 @@
+<app-navbar />
+<h2>Enter Hotel Details</h2>
+<form (ngSubmit)="addHotel()">
+  <label for="hotelName">Hotel Name</label>
+  <input
+    type="text"
+    id="hotelName"
+    [(ngModel)]="hotelName"
+    name="hotelName"
+    required
+  />
+
+  <label for="rate">Rate</label>
+  <input type="number" id="rate" [(ngModel)]="rate" name="rate" required />
+
+  <label for="amenities">Amenities</label>
+  <input type="text" id="amenities" [(ngModel)]="amenities" name="amenities" />
+
+  <button type="submit">add hotel</button>
+</form>
