@@ -6,7 +6,18 @@
   </div>
 
   <div class="hotel-actions">
-    <button class="update-btn">Update Details</button>
+    <button
+      class="update-btn"
+      [routerLink]="[
+        '/update-hotels',
+        hotel.id,
+        hotel.name,
+        hotel.rate,
+        hotel.amenities
+      ]"
+    >
+      Update Details
+    </button>
     <button class="delete-btn" (click)="deleteHotel()">Delete Hotel</button>
   </div>
 </div>

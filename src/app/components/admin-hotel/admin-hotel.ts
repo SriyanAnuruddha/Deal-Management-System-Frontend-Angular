@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 
 interface Hotel {
   id: string;
@@ -23,7 +24,7 @@ interface AuthUser {
 
 @Component({
   selector: 'app-admin-hotel',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './admin-hotel.html',
   styleUrl: './admin-hotel.scss',
 })

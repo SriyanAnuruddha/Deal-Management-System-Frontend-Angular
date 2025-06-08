@@ -1,0 +1,39 @@
+<app-navbar />
+<h2>Update Hotel Details</h2>
+
+<form (ngSubmit)="updateHotel()" #hotelForm="ngForm">
+  <div *ngIf="apiErrors" class="api-errors">
+    <p *ngIf="apiErrors.Name">{{ apiErrors.Name[0] }}</p>
+    <p *ngIf="apiErrors.Rate">{{ apiErrors.Rate[0] }}</p>
+    <p *ngIf="apiErrors.Amenities">{{ apiErrors.Amenities[0] }}</p>
+    <p *ngIf="apiErrors.general">{{ apiErrors.general }}</p>
+  </div>
+
+  <label for="hotelName">Hotel Name</label>
+  <input
+    type="text"
+    id="hotelName"
+    [(ngModel)]="hotelData.name"
+    name="name"
+    required
+  />
+
+  <label for="rate">Rate</label>
+  <input
+    type="number"
+    id="rate"
+    [(ngModel)]="hotelData.rate"
+    name="rate"
+    required
+  />
+
+  <label for="amenities">Amenities</label>
+  <input
+    type="text"
+    id="amenities"
+    [(ngModel)]="hotelData.amenities"
+    name="amenities"
+  />
+
+  <button type="submit">Update Hotel Details</button>
+</form>

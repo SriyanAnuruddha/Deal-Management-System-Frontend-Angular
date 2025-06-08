@@ -6,6 +6,7 @@ import { SignupPage } from './pages/signup-page/signup-page';
 import { ManageHotelsPage } from './pages/manage-hotels-page/manage-hotels-page';
 import { ManageDealsPage } from './pages/manage-deals-page/manage-deals-page';
 import { AddHotelPage } from './pages/add-hotel-page/add-hotel-page';
+import { UpdateHotelPage } from './pages/update-hotel-page/update-hotel-page';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'add-hotels',
     component: AddHotelPage,
+  },
+  {
+    path: 'update-hotels/:id/:name/:rate/:amenities',
+    component: UpdateHotelPage,
   },
 ];
