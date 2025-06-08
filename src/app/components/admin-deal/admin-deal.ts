@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router'; // Router is not strictly needed for routerLink, but RouterLink is.
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-deal',
   standalone: true,
-  imports: [CommonModule, RouterLink], // Ensure RouterLink is imported
+  imports: [CommonModule, RouterLink],
   templateUrl: './admin-deal.html',
   styleUrl: './admin-deal.scss',
 })
@@ -22,7 +22,4 @@ export class AdminDeal {
   }
 
   onViewDetailsClick(): void {}
-
-  // This method is no longer needed as routerLink handles the navigation directly
-  // onUpdateDealClick(): void {}
 }

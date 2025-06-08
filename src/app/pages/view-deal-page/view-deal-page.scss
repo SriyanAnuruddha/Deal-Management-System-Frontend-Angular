@@ -1,0 +1,68 @@
+.view-deal-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+
+  .loading-message,
+  .api-errors,
+  .not-found-message,
+  .no-video-message,
+  .no-hotels-message {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+
+    &.api-errors {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    &.not-found-message {
+      background-color: #e2e3e5;
+      color: #383d41;
+    }
+  }
+
+  .video-container {
+    margin-top: 2rem;
+
+    h3 {
+      color: #34495e;
+      margin-bottom: 0.8rem;
+    }
+
+    video {
+      display: block;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .hotels-section {
+    margin-top: 2.5rem;
+
+    h3 {
+      color: #34495e;
+      margin-bottom: 1rem;
+    }
+
+    .related-hotels-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+  }
+}

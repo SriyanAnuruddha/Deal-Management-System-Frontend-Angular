@@ -1,0 +1,6 @@
+<div class="deal-card">
+  <h3>Deal Name: <span>{{ deal?.name }}</span></h3>
+  <button [routerLink]="['/view-deal', deal?.id ,deal?.slug]">
+    View Deal Details
+  </button>
+</div>

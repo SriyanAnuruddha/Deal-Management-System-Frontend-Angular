@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // Import ChangeDetectorRef
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -38,7 +38,7 @@ export class AssignHotelsDealsPage implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class AssignHotelsDealsPage implements OnInit {
       } else {
         this.apiErrors = { general: 'Deal ID not provided in URL.' };
         this.isLoading = false;
-        this.cdr.detectChanges(); // Trigger change detection here too
+        this.cdr.detectChanges();
       }
     });
   }
@@ -70,7 +70,7 @@ export class AssignHotelsDealsPage implements OnInit {
           general: 'Authentication error. Please log in again.',
         };
         this.isLoading = false;
-        this.cdr.detectChanges(); // Trigger change detection
+        this.cdr.detectChanges();
         return;
       }
     }
@@ -80,7 +80,7 @@ export class AssignHotelsDealsPage implements OnInit {
         general: 'Authentication token not found. Please log in.',
       };
       this.isLoading = false;
-      this.cdr.detectChanges(); // Trigger change detection
+      this.cdr.detectChanges();
       return;
     }
 
@@ -97,7 +97,7 @@ export class AssignHotelsDealsPage implements OnInit {
           this.apiErrors = { general: 'Unexpected format for hotels data.' };
         }
         this.isLoading = false;
-        this.cdr.detectChanges(); // Force change detection after data is set and loading is false
+        this.cdr.detectChanges();
       },
       error: (error: HttpErrorResponse) => {
         this.apiErrors = {
@@ -110,7 +110,7 @@ export class AssignHotelsDealsPage implements OnInit {
             'Authorization error. Please check your login status.';
         }
         this.isLoading = false;
-        this.cdr.detectChanges(); // Force change detection on error
+        this.cdr.detectChanges();
       },
     });
   }
@@ -121,7 +121,7 @@ export class AssignHotelsDealsPage implements OnInit {
     } else {
       this.selectedHotelIds.delete(event.hotelId);
     }
-    this.cdr.detectChanges(); // Force change detection on selection change
+    this.cdr.detectChanges();
   }
 
   assignHotelsToDeal(): void {

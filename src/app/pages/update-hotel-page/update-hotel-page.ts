@@ -17,8 +17,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './update-hotel-page.scss',
 })
 export class UpdateHotelPage implements OnInit {
-  hotelData: any = null; // Changed to 'any'
-  apiErrors: any = null; // Changed to 'any'
+  hotelData: any = null;
+  apiErrors: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,11 +58,11 @@ export class UpdateHotelPage implements OnInit {
     this.apiErrors = null;
 
     const authUserString = localStorage.getItem('authUser');
-    let authToken: any = null; // Changed to 'any'
+    let authToken: any = null;
 
     if (authUserString) {
       try {
-        const authUser: any = JSON.parse(authUserString); // Changed to 'any'
+        const authUser: any = JSON.parse(authUserString);
         authToken = authUser.token;
       } catch (e) {
         console.error('Error parsing authUser from localStorage:', e);
@@ -98,14 +98,12 @@ export class UpdateHotelPage implements OnInit {
         this.router.navigate(['/manage-hotels']);
       },
       error: (error: HttpErrorResponse) => {
-        // HttpErrorResponse is still useful here for status/message
         console.error('Error updating hotel:', error);
 
         if (error.status === 400 && error.error && error.error.errors) {
-          const backendErrors: any = error.error.errors; // Changed to 'any'
+          const backendErrors: any = error.error.errors;
           this.apiErrors = { ...backendErrors };
 
-          // Removed Array.isArray checks. Assumes properties like Name, Rate, Amenities are arrays if they exist.
           if (this.apiErrors.Name) {
             this.apiErrors.Name = this.apiErrors.Name[0];
           }

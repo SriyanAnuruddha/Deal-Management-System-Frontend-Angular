@@ -10,15 +10,13 @@ import { UpdateHotelPage } from './pages/update-hotel-page/update-hotel-page';
 import { AddDealPage } from './pages/add-deal-page/add-deal-page';
 import { UpdateDealPage } from './pages/update-deal-page/update-deal-page';
 import { AssignHotelsDealsPage } from './pages/assign-hotels-deals-page/assign-hotels-deals-page';
+import { ViewDealsPage } from './pages/view-deals-page/view-deals-page';
+import { ViewDealPage } from './pages/view-deal-page/view-deal-page';
 
 export const routes: Routes = [
   {
     path: '',
     component: LoginPage,
-  },
-  {
-    path: 'user',
-    component: UserHomePage,
   },
   {
     path: 'admin',
@@ -55,5 +53,13 @@ export const routes: Routes = [
   {
     path: 'assign-hotels/:id',
     component: AssignHotelsDealsPage,
+  },
+  {
+    path: 'view-deals',
+    component: ViewDealsPage,
+  },
+  {
+    path: 'view-deal/:id/:slug',
+    component: ViewDealPage,
   },
 ];

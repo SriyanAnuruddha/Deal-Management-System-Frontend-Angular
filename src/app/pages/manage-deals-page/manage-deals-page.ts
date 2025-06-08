@@ -43,7 +43,7 @@ export class ManageDealsPage implements OnInit {
       next: (data: any) => {
         if (Array.isArray(data)) {
           this.deals = data;
-          this.cdr.detectChanges(); // Explicitly trigger change detection
+          this.cdr.detectChanges();
         } else {
           this.apiErrors = {
             general: 'Unexpected API response format. Expected an array.',
@@ -112,8 +112,8 @@ export class ManageDealsPage implements OnInit {
       .subscribe({
         next: (response: any) => {
           alert(`Deal with ID: ${dealId} deleted successfully!`);
-          // Instead of just filtering, re-fetch all deals to ensure fresh data
-          this.fetchAllDeals(); // <--- CALL fetchAllDeals() here to refresh the list
+
+          this.fetchAllDeals();
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 401) {
@@ -128,7 +128,7 @@ export class ManageDealsPage implements OnInit {
             this.apiErrors = {
               general: 'Deal not found. It might have already been deleted.',
             };
-            // If 404, the deal is effectively gone, so refresh the list
+
             this.fetchAllDeals();
           } else {
             this.apiErrors = {

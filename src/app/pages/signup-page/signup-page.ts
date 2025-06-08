@@ -33,7 +33,7 @@ export class SignupPage {
         this.signupForm.reset();
         localStorage.setItem('authUser', JSON.stringify(res));
 
-        this.router.navigate(['/user']);
+        this.router.navigate(['/view-deals']);
       },
       error: (err) => {
         alert('username already exists!');

@@ -1,0 +1,54 @@
+<app-navbar />
+<div class="view-deal-container">
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Loading deal details...</p>
+  </div>
+
+  <div *ngIf="apiErrors" class="api-errors">
+    <p>{{ apiErrors.general }}</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading && !apiErrors && dealDetails">
+    <h1>Deal Name: {{ dealDetails.name }}</h1>
+
+    <div class="video-container">
+      <h3>Deal Video</h3>
+      <div *ngIf="!videoUrl && isLoading">
+        <p>Loading video...</p>
+      </div>
+      <video *ngIf="videoUrl" controls width="640" height="360">
+        <source [src]="videoUrl" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div
+        *ngIf="!videoUrl && !isLoading && !apiErrors"
+        class="no-video-message"
+      >
+        <p>No video available for this deal.</p>
+      </div>
+    </div>
+
+    <div class="hotels-section">
+      <h3>Available Hotels For This Deal</h3>
+      <div
+        *ngIf="dealDetails.hotels && dealDetails.hotels.length === 0"
+        class="no-hotels-message"
+      >
+        <p>No hotels assigned to this deal.</p>
+      </div>
+      <div class="related-hotels-list">
+        <app-hotel
+          *ngFor="let hotel of dealDetails.hotels"
+          [hotel]="hotel"
+        ></app-hotel>
+      </div>
+    </div>
+  </ng-container>
+
+  <div
+    *ngIf="!isLoading && !apiErrors && !dealDetails"
+    class="not-found-message"
+  >
+    <p>Deal not found or an unexpected issue occurred.</p>
+  </div>
+</div>

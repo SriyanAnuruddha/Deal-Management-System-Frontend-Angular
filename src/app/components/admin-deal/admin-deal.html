@@ -2,7 +2,9 @@
   <h3>Deal Name: <span>{{ deal?.name }}</span></h3>
 
   <div class="deal-actions">
-    <button (click)="onViewDetailsClick()">View Deal Details</button>
+    <button [routerLink]="['/view-deal', deal?.id ,deal?.slug]">
+      View Deal Details
+    </button>
     <button [routerLink]="['/assign-hotels', deal?.id]">
       assign more hotels
     </button>

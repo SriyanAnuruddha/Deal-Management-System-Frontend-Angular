@@ -37,7 +37,7 @@ export class LoginPage {
         if (res.role === 'admin') {
           this.router.navigate(['/admin']);
         } else if (res.role === 'customer') {
-          this.router.navigate(['/user']);
+          this.router.navigate(['/view-deals']);
         }
       },
       error: (err) => {
