@@ -1,4 +1,8 @@
 <div class="navbar">
   <h2>Deal Management System</h2>
-  <h4 (click)="logOut()">Logout</h4>
+  <div class="nav-links">
+    <h4 [routerLink]="'/manage-deals'">Manage Deals</h4>
+    <h4 [routerLink]="'/manage-hotels'">Manage Hotels</h4>
+    <h4 (click)="logOut()">Logout</h4>
+  </div>
 </div>

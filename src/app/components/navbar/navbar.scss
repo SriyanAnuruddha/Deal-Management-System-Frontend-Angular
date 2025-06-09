@@ -13,6 +13,11 @@
     margin: 0;
   }
 
+  .nav-links {
+    display: flex;
+    gap: 2rem; // space between the links
+  }
+
   h4 {
     font-size: 1rem;
     font-weight: 500;

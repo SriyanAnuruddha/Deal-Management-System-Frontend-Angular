@@ -21,7 +21,6 @@ export class ViewDealsPage implements OnInit {
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log('ViewDealsPage ngOnInit called.');
     this.fetchAllDeals();
   }
 
