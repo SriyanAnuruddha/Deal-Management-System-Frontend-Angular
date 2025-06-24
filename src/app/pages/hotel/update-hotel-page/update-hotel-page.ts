@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
 import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { routes } from '../../app.routes';
+import { routes } from '../../../app.routes';
 import { Router } from '@angular/router';
 
 interface AuthUser {

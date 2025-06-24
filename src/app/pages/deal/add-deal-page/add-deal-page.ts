@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
+
 import {
   HttpClient,
   HttpHeaders,
@@ -7,8 +8,8 @@ import {
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdminAssignHotel } from '../../components/admin-assign-hotel/admin-assign-hotel';
 import { Router } from '@angular/router';
+import { AdminAssignHotel } from '../../../components/admin-assign-hotel/admin-assign-hotel';
 
 @Component({
   selector: 'app-add-deal-page',

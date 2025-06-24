@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
+
 import { RouterLink } from '@angular/router';
 import {
   HttpClient,
@@ -7,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { AdminHotel } from '../../components/admin-hotel/admin-hotel';
+import { AdminHotel } from '../../../components/admin-hotel/admin-hotel';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

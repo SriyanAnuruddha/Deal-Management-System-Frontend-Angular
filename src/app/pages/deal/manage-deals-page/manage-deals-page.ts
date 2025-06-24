@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
 import { RouterLink, Router } from '@angular/router';
 import {
   HttpClient,
@@ -7,7 +7,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { AdminDeal } from '../../components/admin-deal/admin-deal';
+import { AdminDeal } from '../../../components/admin-deal/admin-deal';
 
 @Component({
   selector: 'app-manage-deals-page',

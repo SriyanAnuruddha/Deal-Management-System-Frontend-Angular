@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // Import ChangeDetectorRef
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Deal } from '../../components/deal/deal';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
+import { Deal } from '../../../components/deal/deal';
 
 @Component({
   selector: 'app-view-deals-page',

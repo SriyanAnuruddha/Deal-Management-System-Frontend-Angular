@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
+
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Hotel } from '../../components/hotel/hotel';
+import { Hotel } from '../../../components/hotel/hotel';
 
 interface DealDetails {
   id: string;

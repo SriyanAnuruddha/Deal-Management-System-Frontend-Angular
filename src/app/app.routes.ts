@@ -3,15 +3,15 @@ import { LoginPage } from './pages/login-page/login-page';
 import { UserHomePage } from './pages/user-home-page/user-home-page';
 import { AdminHomePage } from './pages/admin-home-page/admin-home-page';
 import { SignupPage } from './pages/signup-page/signup-page';
-import { ManageHotelsPage } from './pages/manage-hotels-page/manage-hotels-page';
-import { ManageDealsPage } from './pages/manage-deals-page/manage-deals-page';
-import { AddHotelPage } from './pages/add-hotel-page/add-hotel-page';
-import { UpdateHotelPage } from './pages/update-hotel-page/update-hotel-page';
-import { AddDealPage } from './pages/add-deal-page/add-deal-page';
-import { UpdateDealPage } from './pages/update-deal-page/update-deal-page';
-import { AssignHotelsDealsPage } from './pages/assign-hotels-deals-page/assign-hotels-deals-page';
-import { ViewDealsPage } from './pages/view-deals-page/view-deals-page';
-import { ViewDealPage } from './pages/view-deal-page/view-deal-page';
+import { ManageHotelsPage } from './pages/hotel/manage-hotels-page/manage-hotels-page';
+import { AddHotelPage } from './pages/hotel/add-hotel-page/add-hotel-page';
+import { UpdateHotelPage } from './pages/hotel/update-hotel-page/update-hotel-page';
+import { ViewDealPage } from './pages/deal/view-deal-page/view-deal-page';
+import { AddDealPage } from './pages/deal/add-deal-page/add-deal-page';
+import { AssignHotelsDealsPage } from './pages/deal/assign-hotels-deals-page/assign-hotels-deals-page';
+import { UpdateDealPage } from './pages/deal/update-deal-page/update-deal-page';
+import { ManageDealsPage } from './pages/deal/manage-deals-page/manage-deals-page';
+import { ViewDealsPage } from './pages/deal/view-deals-page/view-deals-page';
 
 export const routes: Routes = [
   {

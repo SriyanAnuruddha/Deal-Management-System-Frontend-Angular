@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar';
+import { Navbar } from '../../../components/navbar/navbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   HttpClient,
@@ -7,7 +7,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { AdminAssignHotel } from '../../components/admin-assign-hotel/admin-assign-hotel';
+import { AdminAssignHotel } from '../../../components/admin-assign-hotel/admin-assign-hotel';
 
 interface Hotel {
   id: string;
