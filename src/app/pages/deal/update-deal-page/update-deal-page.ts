@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Navbar } from '../../../components/navbar/navbar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -7,16 +7,25 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NgForm,
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-update-deal-page',
   standalone: true,
-  imports: [Navbar, CommonModule, FormsModule],
+  imports: [Navbar, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './update-deal-page.html',
   styleUrl: './update-deal-page.scss',
 })
 export class UpdateDealPage implements OnInit {
+  updateDealForm!: FormGroup;
+
   dealId: string | null = null;
   dealName: string = '';
   selectedFile: File | null = null;
@@ -24,18 +33,27 @@ export class UpdateDealPage implements OnInit {
 
   private dealsApiUrl = 'https://localhost:7152/api/deal';
 
+  @ViewChild('dealForm') ngForm!: NgForm;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.updateDealForm = this.fb.group({
+      dealNameControl: ['', Validators.required],
+      videoFileControl: [null],
+    });
+
     this.route.paramMap.subscribe((params) => {
       this.dealId = params.get('id');
       const nameFromUrl = params.get('name');
       if (nameFromUrl) {
         this.dealName = nameFromUrl;
+        this.updateDealForm.get('dealNameControl')?.patchValue(nameFromUrl);
       }
     });
   }
@@ -45,8 +63,14 @@ export class UpdateDealPage implements OnInit {
     let fileList: FileList | null = element.files;
     if (fileList && fileList.length > 0) {
       this.selectedFile = fileList[0];
+      this.updateDealForm
+        .get('videoFileControl')
+        ?.patchValue(this.selectedFile);
+      this.updateDealForm.get('videoFileControl')?.updateValueAndValidity();
     } else {
       this.selectedFile = null;
+      this.updateDealForm.get('videoFileControl')?.patchValue(null);
+      this.updateDealForm.get('videoFileControl')?.updateValueAndValidity();
     }
   }
 
@@ -58,8 +82,22 @@ export class UpdateDealPage implements OnInit {
       return;
     }
 
-    if (!this.dealName.trim()) {
-      alert('Deal name cannot be empty.');
+    this.updateDealForm.get('dealNameControl')?.patchValue(this.dealName);
+    this.updateDealForm.get('dealNameControl')?.updateValueAndValidity();
+
+    this.updateDealForm.markAllAsTouched();
+    if (this.ngForm) {
+      this.ngForm.form.markAllAsTouched();
+    }
+
+    if (this.updateDealForm.invalid) {
+      if (this.updateDealForm.get('dealNameControl')?.errors?.['required']) {
+        this.apiErrors = {
+          ...(this.apiErrors || {}),
+          Name: ['Deal name cannot be empty.'],
+        };
+      }
+      alert('Please correct the validation errors before submitting.');
       return;
     }
 
@@ -112,7 +150,34 @@ export class UpdateDealPage implements OnInit {
           this.router.navigate(['/manage-deals']);
         },
         error: (error: HttpErrorResponse) => {
-          if (error.status === 401) {
+          if (error.status === 400 && error.error) {
+            try {
+              const backendErrors = JSON.parse(error.error).errors;
+              if (backendErrors.Name) {
+                this.apiErrors = {
+                  ...(this.apiErrors || {}),
+                  Name: backendErrors.Name[0],
+                };
+                if (this.ngForm && this.ngForm.controls['name']) {
+                  this.ngForm.controls['name'].setErrors({
+                    backend: backendErrors.Name[0],
+                  });
+                }
+              }
+              if (backendErrors.VideoFile) {
+                this.apiErrors = {
+                  ...(this.apiErrors || {}),
+                  VideoFile: backendErrors.VideoFile[0],
+                };
+              }
+            } catch (e) {
+              this.apiErrors = {
+                general:
+                  error.error.message ||
+                  `Failed to update deal: ${error.statusText}`,
+              };
+            }
+          } else if (error.status === 401) {
             this.apiErrors = {
               general: 'Unauthorized: Please log in again to update deals.',
             };

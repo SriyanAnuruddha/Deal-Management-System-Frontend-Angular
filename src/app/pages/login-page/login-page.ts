@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
+  standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
@@ -19,12 +20,19 @@ export class LoginPage {
   constructor(private router: Router) {}
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
   loginService = inject(LoginService);
 
   onSubmitHandler() {
+    this.loginForm.markAllAsTouched();
+
+    if (this.loginForm.invalid) {
+      alert('Please enter both username and password.');
+      return;
+    }
+
     const username = this.loginForm.value.username!;
     const password = this.loginForm.value.password!;
 

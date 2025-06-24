@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Navbar } from '../../../components/navbar/navbar';
 
 import {
@@ -7,40 +7,67 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NgForm,
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminAssignHotel } from '../../../components/admin-assign-hotel/admin-assign-hotel';
 
 @Component({
   selector: 'app-add-deal-page',
   standalone: true,
-  imports: [Navbar, CommonModule, FormsModule, AdminAssignHotel],
+  imports: [
+    Navbar,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AdminAssignHotel,
+  ],
   templateUrl: './add-deal-page.html',
   styleUrl: './add-deal-page.scss',
 })
 export class AddDealPage implements OnInit {
+  dealForm!: FormGroup;
+
   dealName: any = '';
-  videoFile: any = null;
+  videoFile: File | null = null;
+
   availableHotels: any[] = [];
-  selectedHotelIds: any[] = [];
+  selectedHotelIds: string[] = [];
   apiErrors: any = null;
 
   private hotelsApiUrl = 'https://localhost:7152/api/hotels';
   private dealsApiUrl = 'https://localhost:7152/api/deal';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  @ViewChild('dealForm') ngForm!: NgForm;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    this.dealForm = this.fb.group({
+      dealName: ['', Validators.required],
+      videoFileControl: [null, Validators.required],
+    });
+
     this.fetchAvailableHotels();
   }
 
   fetchAvailableHotels(): void {
     const authUserString = localStorage.getItem('authUser');
-    let authToken: any = null;
+    let authToken: string | null = null;
 
     if (authUserString) {
       try {
-        const authUser: any = JSON.parse(authUserString);
+        const authUser: { token: string } = JSON.parse(authUserString);
         authToken = authUser.token;
       } catch (e) {
         console.error(
@@ -96,24 +123,18 @@ export class AddDealPage implements OnInit {
     });
   }
 
-  // New method to check if a hotel is selected
   isHotelSelected(hotelId: string): boolean {
-    return this.selectedHotelIds.some((item: any) => item.hotelId === hotelId);
+    return this.selectedHotelIds.includes(hotelId);
   }
 
-  onHotelAssignmentChange(event: any): void {
+  onHotelAssignmentChange(event: { hotelId: string; checked: boolean }): void {
     if (event.checked) {
-      // Add hotel ID if checked and not already present
-      const exists = this.selectedHotelIds.some(
-        (item: any) => item.hotelId === event.hotelId
-      );
-      if (!exists) {
-        this.selectedHotelIds.push({ hotelId: event.hotelId });
+      if (!this.selectedHotelIds.includes(event.hotelId)) {
+        this.selectedHotelIds.push(event.hotelId);
       }
     } else {
-      // Remove hotel ID if unchecked
       this.selectedHotelIds = this.selectedHotelIds.filter(
-        (item: any) => item.hotelId !== event.hotelId
+        (id: string) => id !== event.hotelId
       );
     }
     console.log('Selected Hotels:', this.selectedHotelIds);
@@ -123,37 +144,60 @@ export class AddDealPage implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.videoFile = input.files[0];
+      this.dealForm.get('videoFileControl')?.patchValue(this.videoFile);
+      this.dealForm.get('videoFileControl')?.updateValueAndValidity();
     } else {
       this.videoFile = null;
+      this.dealForm.get('videoFileControl')?.patchValue(null);
+      this.dealForm.get('videoFileControl')?.updateValueAndValidity();
     }
   }
 
   createDeal(): void {
     this.apiErrors = null;
 
-    if (!this.dealName.trim()) {
-      this.apiErrors = { Name: ['Deal name cannot be empty.'] };
-      return;
+    this.dealForm.get('dealName')?.patchValue(this.dealName);
+    this.dealForm.get('dealName')?.updateValueAndValidity();
+
+    this.dealForm.markAllAsTouched();
+    if (this.ngForm) {
+      this.ngForm.form.markAllAsTouched();
     }
+
     if (!this.videoFile) {
       this.apiErrors = {
+        ...(this.apiErrors || {}),
         VideoFile: ['Please upload a video file for the deal.'],
       };
-      return;
     }
     if (this.selectedHotelIds.length === 0) {
       this.apiErrors = {
+        ...(this.apiErrors || {}),
         HotelIds: ['Please assign at least one hotel to this deal.'],
       };
+    }
+
+    if (
+      this.dealForm.invalid ||
+      !this.videoFile ||
+      this.selectedHotelIds.length === 0 ||
+      (this.apiErrors && (this.apiErrors.VideoFile || this.apiErrors.HotelIds))
+    ) {
+      if (this.dealForm.get('dealName')?.invalid && !this.apiErrors?.Name) {
+        this.apiErrors = {
+          ...(this.apiErrors || {}),
+          Name: ['Deal name cannot be empty.'],
+        };
+      }
       return;
     }
 
     const authUserString = localStorage.getItem('authUser');
-    let authToken: any = null;
+    let authToken: string | null = null;
 
     if (authUserString) {
       try {
-        const authUser: any = JSON.parse(authUserString);
+        const authUser: { token: string } = JSON.parse(authUserString);
         authToken = authUser.token;
       } catch (e) {
         this.apiErrors = {
@@ -181,8 +225,8 @@ export class AddDealPage implements OnInit {
       formData.append('videoFile', this.videoFile, this.videoFile.name);
     }
 
-    this.selectedHotelIds.forEach((hotel: any) => {
-      formData.append('HotelIDs', hotel.hotelId);
+    this.selectedHotelIds.forEach((hotelId: string) => {
+      formData.append('HotelIDs', hotelId);
     });
 
     const headers = new HttpHeaders({
@@ -195,20 +239,20 @@ export class AddDealPage implements OnInit {
         console.log('Deal creation response:', response);
         this.router.navigate(['/manage-deals']);
       },
-      error: (error: any) => {
+      error: (error: HttpErrorResponse) => {
         console.error('AddDealPage: Error creating deal:', error);
         if (error.status === 400 && error.error && error.error.errors) {
           const backendErrors: any = error.error.errors;
           this.apiErrors = { ...backendErrors };
-          if (this.apiErrors.Name) {
-            this.apiErrors.Name = this.apiErrors.Name[0];
+
+          if (this.ngForm && this.ngForm.controls['dealName']) {
+            if (this.apiErrors.Name) {
+              this.ngForm.controls['dealName'].setErrors({
+                backend: this.apiErrors.Name[0],
+              });
+            }
           }
-          if (this.apiErrors.VideoFile) {
-            this.apiErrors.VideoFile = this.apiErrors.VideoFile[0];
-          }
-          if (this.apiErrors.HotelIds) {
-            this.apiErrors.HotelIds = this.apiErrors.HotelIds[0];
-          }
+
           alert('Validation Error: Please check the form for invalid input.');
         } else if (error.status === 401) {
           this.apiErrors = { general: 'Unauthorized: Please log in again.' };

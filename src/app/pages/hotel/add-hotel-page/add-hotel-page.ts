@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Navbar } from '../../../components/navbar/navbar';
 import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { routes } from '../../../app.routes';
+import { CommonModule } from '@angular/common';
+import {
+  FormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 interface AuthUser {
@@ -27,18 +34,66 @@ interface ValidationErrorResponse {
 
 @Component({
   selector: 'app-add-hotel-page',
-  imports: [Navbar, FormsModule],
+  standalone: true,
+  imports: [Navbar, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-hotel-page.html',
   styleUrl: './add-hotel-page.scss',
 })
-export class AddHotelPage {
-  constructor(private http: HttpClient, private router: Router) {}
+export class AddHotelPage implements OnInit {
+  addHotelForm!: FormGroup;
 
   hotelName: string = '';
   rate: number | null = null;
   amenities: string = '';
 
+  apiErrors: any = null;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.addHotelForm = this.fb.group({
+      hotelNameControl: ['', Validators.required],
+      rateControl: [null, [Validators.required, Validators.min(0)]],
+      amenitiesControl: [''],
+    });
+  }
+
   addHotel() {
+    this.apiErrors = null;
+
+    this.addHotelForm.get('hotelNameControl')?.patchValue(this.hotelName);
+    this.addHotelForm.get('rateControl')?.patchValue(this.rate);
+    this.addHotelForm.get('amenitiesControl')?.patchValue(this.amenities);
+
+    this.addHotelForm.markAllAsTouched();
+    this.addHotelForm.get('hotelNameControl')?.updateValueAndValidity();
+    this.addHotelForm.get('rateControl')?.updateValueAndValidity();
+    this.addHotelForm.get('amenitiesControl')?.updateValueAndValidity();
+
+    if (this.addHotelForm.invalid) {
+      let validationMessage = '';
+      if (this.addHotelForm.get('hotelNameControl')?.errors?.['required']) {
+        validationMessage += 'Hotel name is required.\n';
+      }
+      if (this.addHotelForm.get('rateControl')?.errors?.['required']) {
+        validationMessage += 'Rate is required.\n';
+      }
+      if (this.addHotelForm.get('rateControl')?.errors?.['min']) {
+        validationMessage += 'Rate must be a positive number.\n';
+      }
+
+      if (validationMessage) {
+        alert('Validation Errors:\n' + validationMessage);
+      } else {
+        alert('Please fill in all required fields correctly.');
+      }
+      return;
+    }
+
     const hotelData = {
       name: this.hotelName,
       rate: this.rate,
@@ -82,6 +137,8 @@ export class AddHotelPage {
           this.hotelName = '';
           this.rate = null;
           this.amenities = '';
+
+          this.addHotelForm.reset();
 
           this.router.navigate(['manage-hotels']);
         },
